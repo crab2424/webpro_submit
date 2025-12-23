@@ -1,0 +1,150 @@
+\chapter[開発者向け仕様書：都道府県一覧表示システム]{\texorpdfstring{開発者向け仕様書：\\都道府県一覧表示システム}{開発者向け仕様書：都道府県一覧表示システム}}
+
+\section{概要}
+本仕様書は，Node.jsおよびテンプレートエンジンEJSを用いた「都道府県一覧表示システム」の設計仕様書である．
+本システムは，サーバーサイドで都道府県データを管理し，EJSを用いて動的にHTMLを生成・表示する．
+データベースの利用は行わず，サーバープロセスのメモリ上（変数）でデータを保持・操作することを前提とする．
+
+\section{データ構造}
+サーバー内の配列変数で管理するオブジェクト構造は表\ref{tab:schema}の通りに構成する．
+
+\begin{table}[H]
+    \centering
+    \caption{都道府県データ構造}
+    \label{tab:schema}
+    \begin{tabular}{c|c|c}
+        \toprule
+        プロパティ名 & データ型 & 説明 \\
+        \midrule
+        id & Number & 一意な識別子 \\
+        name & String & 都道府県名 \\
+        code & Number & 都道府県番号 \\
+        area & Number & 面積（$km^2$） \\
+        population & Number & 人口（人） \\
+        capital & String & 県庁所在地 \\
+        region & String & 地方区分 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{ディレクトリ構成}
+
+本システムは，図\ref{fig:pref_dir}に示すディレクトリ構造に従って，使用するファイルを配置する．
+
+\begin{figure}[H]
+    \centering
+    \begin{verbatim}
+webpro_06/
+    |- app_system.js            (メインロジック・データ変数保持)
+    |- public/                  (静的ファイル)
+        |- pref_new.html        (新規作成フォーム)
+    |- views/                   (EJSテンプレート)
+        |- pref/                (都道府県システム)
+            |- pref_check.ejs   (削除確認画面)
+            |- pref_detail.ejs  (詳細表示画面)
+            |- pref_edit.ejs    (編集フォーム)
+            |- pref.ejs         (一覧表示画面)
+\end{verbatim}
+    \caption{ディレクトリ構成}
+    \label{fig:pref_dir}
+\end{figure}
+
+\section{HTTPメソッドとルーティング}
+本システムにおける各URLとHTTPメソッド，および対応する処理を表\ref{tab:routing}に定義する．
+
+\begin{table}[H]
+    \centering
+    \caption{ルーティング一覧}
+    \label{tab:routing}
+    \begin{tabular}{llll}
+        \toprule
+        機能 & メソッド & パス (URL) & 対応ビュー/処理 \\
+        \midrule
+        一覧表示 & GET & /pref & views/pref/pref.ejs \\
+        新規作成フォーム & GET & /pref/create & public/pref\_new.html \\
+        詳細表示 & GET & /pref/:id & views/pref\_detail.ejs \\
+        編集フォーム & GET & /pref/edit/:id & views/pref\_edit.ejs \\
+        削除確認 & GET & /pref/check/:id & views/pref\_check.ejs \\
+
+        \midrule
+        新規データ作成 & POST & /pref & (処理後一覧へリダイレクト) \\
+        データ更新 & POST & /pref/update/:id & (処理後詳細へリダイレクト) \\
+        データ削除 & GET & /pref/delete/:id & (処理後一覧へリダイレクト) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{ページ遷移}
+
+本システムにおける画面間の遷移を図\ref{fig:flowchart}に示す．なお，本システムのページには戻るリンクを配置するため，一覧表示ページ及び詳細表示ページに直接遷移することが可能である．
+
+\vspace{1cm}
+% フローチャート配置場所
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/dev_pref/flowchart-1.pdf}
+    \caption{画面遷移フローチャート}
+    \label{fig:flowchart}
+\end{figure}
+
+\newpage
+
+\section{各機能・リソース詳細}
+
+\subsection{一覧機能 (Index)}
+\begin{itemize}
+    \item URL: GET /pref
+    \item 処理: サーバー変数の全データをEJSに渡し，forEach文を用いてテーブル形式でレンダリングする．
+    \item 要素: 「新規登録ボタン」，各行ごとの「詳細リンク」．
+\end{itemize}
+
+\subsection{新規作成機能 (New / Create)}
+\begin{itemize}
+    \item フォーム (GET /pref/create):
+        \begin{itemize}
+            \item 都道府県名，県庁所在地，地方の入力フィールドを表示．
+            \item 送信先は POST /pref．
+        \end{itemize}
+    \item 作成処理 (POST /pref):
+        \begin{itemize}
+            \item リクエストボディから値を取得．
+            \item 新しいIDを採番し，サーバー変数（配列）にpushする．
+            \item 処理完了後，一覧画面(/pref)へリダイレクトする．
+        \end{itemize}
+\end{itemize}
+
+\subsection{詳細表示機能 (Show)}
+\begin{itemize}
+    \item URL: GET /pref/:id
+    \item 処理: URLパラメータのIDに基づき配列を検索し，対象データを表示する．
+    \item 要素: 「編集ボタン」，「削除ボタン」（formタグによるPOST/DELETE送信），「一覧に戻るボタン」．
+\end{itemize}
+
+\subsection{編集・更新機能 (Edit / Update)}
+\begin{itemize}
+    \item フォーム (GET /pref/edit/:id):
+        \begin{itemize}
+            \item 対象データを検索し，value属性に現在の値を埋め込んで表示する．
+            \item 送信先は POST /pref/update/:id．
+        \end{itemize}
+    \item 更新処理 (POST /pref/update/:id):
+        \begin{itemize}
+            \item IDに基づき配列内の該当インデックスを特定．
+            \item リクエストボディの値でプロパティを上書きする．
+            \item 詳細画面(/pref/:id)へリダイレクトする．
+        \end{itemize}
+\end{itemize}
+
+\subsection{削除機能 (Delete)}
+\begin{itemize}
+    \item フォーム (GET /pref/check/:id):
+        \begin{itemize}
+            \item 簡易確認フォームを表示する．
+            \item 確認後、削除処理を実行する．
+        \end{itemize}
+    \item 削除処理 (GET /pref/delete/:id):
+        \begin{itemize}
+            \item IDに基づき配列からspliceで要素を取り除く．
+            \item 削除完了後，一覧画面(/pref)へリダイレクトする．
+        \end{itemize}
+\end{itemize}
