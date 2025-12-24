@@ -72,7 +72,7 @@ webpro_submit/
     \label{tab:routing}
     \begin{tabular}{llll}
         \toprule
-        機能 & メソッド & パス (URL) & 対応ビュー/処理 \\
+        機能 & メソッド & パス (URL) & 対応ビュー\\
         \midrule
         トップページ & GET & / & views/landing.ejs \\
         一覧表示 & GET & /pref & views/pref/pref.ejs \\
@@ -116,7 +116,7 @@ webpro_submit/
 \begin{itemize}
     \item URL: /pref
     \item 処理: サーバー変数の全データをEJSに渡し，for文を用いてテーブル形式で表示する．
-    \item 要素: 各行ごとの要素の名前に対応する詳細リンク，新規登録ボタン
+    \item 要素: 各行ごとの要素の名前に対応する詳細リンク，追加ボタン
 \end{itemize}
 
 \subsection{新規作成機能}
@@ -125,6 +125,7 @@ webpro_submit/
         \begin{itemize}
             \item 処理: 表\ref{tab:schema}のidを除くすべてのプロパティを入力フィールドとして表示する．
             \item 送信先: POST /pref
+            \item 要素: 各プロパティに対応する入力フィールド，登録ボタン，登録後新規作成ボタン
         \end{itemize}
     \item 作成処理: POST /pref
         \begin{itemize}
@@ -153,7 +154,7 @@ webpro_submit/
         \begin{itemize}
             \item idに基づき配列内の該当インデックスを特定．
             \item リクエストボディの値でプロパティを上書きする．
-            \item 更新内容をサーバーのターミナルにログ出力する．
+            \item 表示: 更新内容をサーバーのターミナルにログ出力する．
             \item 更新後，詳細画面(/pref/:id)を表示する．
         \end{itemize}
 \end{itemize}
@@ -162,8 +163,8 @@ webpro_submit/
 \begin{itemize}
     \item フォーム: GET /pref/check/:id
         \begin{itemize}
-            \item 簡易確認フォームを表示する．
-            \item 確認後、GET /pref/delete/:idで削除処理を実行する．
+            \item 処理: 簡易確認フォームを表示する．
+            \item 送信先: GET /pref/delete/:id
         \end{itemize}
     \item 削除処理: GET /pref/delete/:id
         \begin{itemize}
