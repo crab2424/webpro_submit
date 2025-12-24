@@ -10,7 +10,7 @@ app.use(express.json());
 
 //landing
 app.get("/", (req, res) => {
-    res.render("landing");
+    res.render("landing", { message: "25G1034" });
 });
 
 //prefecture
