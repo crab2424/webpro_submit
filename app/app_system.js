@@ -28,16 +28,17 @@ app.get("/pref", (req, res) => {
     res.render('pref/pref', { data: prefectures });
 });
 
+//新規フォーム
+app.get("/pref/create", (req, res) => {
+    res.redirect('/public/pref_new.html');
+});
+
+
 //詳細
 app.get("/pref/:id", (req, res) => {
     const number = req.params.id;
     const detail = prefectures[number];
     res.render('pref/pref_detail', {id: number, data: detail });
-});
-
-//新規フォーム
-app.get("/pref/create", (req, res) => {
-    res.redirect('/public/pref_new.html');
 });
 
 //編集フォーム
