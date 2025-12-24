@@ -34,7 +34,7 @@
 \begin{figure}[H]
     \centering
     \begin{verbatim}
-webpro_06/
+webpro_submit/
     |- app_system.js            (メインロジック・データ変数保持)
     |- public/                  (静的ファイル)
         |- pref_new.html        (新規作成フォーム)
@@ -67,9 +67,9 @@ webpro_06/
         削除確認 & GET & /pref/check/:id & views/pref\_check.ejs \\
 
         \midrule
-        新規データ作成 & POST & /pref & (処理後一覧へリダイレクト) \\
-        データ更新 & POST & /pref/update/:id & (処理後詳細へリダイレクト) \\
-        データ削除 & GET & /pref/delete/:id & (処理後一覧へリダイレクト) \\
+        新規データ作成 & POST & /pref & (処理後一覧または新規作成ページを表示) \\
+        データ更新 & POST & /pref/update/:id & 処理後詳細ページを表示 \\
+        データ削除 & GET & /pref/delete/:id & 処理後一覧へリダイレクト \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -117,7 +117,7 @@ webpro_06/
 \begin{itemize}
     \item URL: GET /pref/:id
     \item 処理: URLパラメータのIDに基づき配列を検索し，対象データを表示する．
-    \item 要素: 「編集ボタン」，「削除ボタン」（formタグによるPOST/DELETE送信），「一覧に戻るボタン」．
+    \item 要素: 「編集ボタン」，「削除ボタン」（formタグによる送信），「一覧に戻るリンク」．
 \end{itemize}
 
 \subsection{編集・更新機能 (Edit / Update)}
@@ -140,7 +140,7 @@ webpro_06/
     \item フォーム (GET /pref/check/:id):
         \begin{itemize}
             \item 簡易確認フォームを表示する．
-            \item 確認後、削除処理を実行する．
+            \item 確認後、GET /pref/delete/:idで削除処理を実行する．
         \end{itemize}
     \item 削除処理 (GET /pref/delete/:id):
         \begin{itemize}
