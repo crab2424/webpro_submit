@@ -68,7 +68,7 @@ app.post("/pref", (req, res) => {
     console.log('新規追加後の都道府県：', req.body);
 
     if (req.body.page === '登録して新たに作成') {
-        res.redirect('/public/pref_new.html');
+        res.redirect('/pref/create');
     } else {
         res.render('pref/pref', { data: prefectures });
     }

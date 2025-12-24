@@ -69,7 +69,8 @@ webpro_submit/
         削除確認 & GET & /pref/check/:id & views/pref\_check.ejs \\
 
         \midrule
-        新規データ作成 & POST & /pref & (処理後一覧または新規作成ページを表示) \\
+        新規データ作成 & POST & /pref & 処理後一覧を表示\\
+        新規データ作成& POST & /pref/create & 処理後新規作成へリダイレクト \\
         データ更新 & POST & /pref/update/:id & 処理後詳細ページを表示 \\
         データ削除 & GET & /pref/delete/:id & 処理後一覧へリダイレクト \\
         \bottomrule
@@ -93,18 +94,18 @@ webpro_submit/
 
 \section{各機能・リソース詳細}
 
-\subsection{一覧機能 (Index)}
+\subsection{一覧表示機能}
 \begin{itemize}
     \item URL: GET /pref
-    \item 処理: サーバー変数の全データをEJSに渡し，forEach文を用いてテーブル形式でレンダリングする．
+    \item 処理: サーバー変数の全データをEJSに渡し，for文を用いてテーブル形式でレンダリングする．
     \item 要素: 「新規登録ボタン」，各行ごとの「詳細リンク」．
 \end{itemize}
 
-\subsection{新規作成機能 (New / Create)}
+\subsection{新規作成機能}
 \begin{itemize}
     \item フォーム (GET /pref/create):
         \begin{itemize}
-            \item 都道府県名，県庁所在地，地方の入力フィールドを表示．
+            \item 表\ref{tab:schema}のidを除くすべてのプロパティを入力フィールドとして表示する．
             \item 送信先は POST /pref．
         \end{itemize}
     \item 作成処理 (POST /pref):
@@ -115,14 +116,14 @@ webpro_submit/
         \end{itemize}
 \end{itemize}
 
-\subsection{詳細表示機能 (Show)}
+\subsection{詳細表示機能}
 \begin{itemize}
     \item URL: GET /pref/:id
     \item 処理: URLパラメータのIDに基づき配列を検索し，対象データを表示する．
     \item 要素: 「編集ボタン」，「削除ボタン」（formタグによる送信），「一覧に戻るリンク」．
 \end{itemize}
 
-\subsection{編集・更新機能 (Edit / Update)}
+\subsection{編集・更新機能}
 \begin{itemize}
     \item フォーム (GET /pref/edit/:id):
         \begin{itemize}
@@ -137,7 +138,7 @@ webpro_submit/
         \end{itemize}
 \end{itemize}
 
-\subsection{削除機能 (Delete)}
+\subsection{削除機能}
 \begin{itemize}
     \item フォーム (GET /pref/check/:id):
         \begin{itemize}
