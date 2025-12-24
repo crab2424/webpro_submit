@@ -5,8 +5,10 @@
 本システムは，サーバーサイドで都道府県データを管理し，EJSを用いて動的にHTMLを生成・表示する．
 データベースの利用は行わず，サーバープロセスのメモリ上（変数）でデータを保持・操作することを前提とする．
 
-\section{データ構造}
-サーバー内の配列変数で管理するオブジェクト構造は表\ref{tab:schema}の通りに構成する．
+\section{データ管理}
+
+\subsection{データ構造}
+サーバー内の配列変数で管理するデータ構造は表\ref{tab:schema}の通りに構成する．
 
 \begin{table}[H]
     \centering
@@ -27,6 +29,16 @@
     \end{tabular}
 \end{table}
 
+idを除くすべてのデータは入力フォームで作成，編集が可能である．idはデータ配列の長さに基づいて自動採番するため，作成時に入力不要である．
+
+\subsection{表示における制約事項}
+本システムでは，データidと配列インデックスの整合性を保つため，以下の仕様を採用する．
+
+\begin{itemize}
+    \item idとインデックスの一致: 配列のインデックスとidを一致させるため，配列のインデックス0番目にはダミーデータを作成し，システム上では非表示とする．
+    \item 一覧表示の処理: idが1番のデータから表示させるため，EJSテンプレート側で配列操作（data.slice(1)）を用いて表示する．
+\end{itemize}
+
 \section{ディレクトリ構成}
 
 本システムは，図\ref{fig:pref_dir}に示すディレクトリ構造に従って，使用するファイルを配置する．
@@ -38,7 +50,6 @@ webpro_submit/
     |- app/
         |- app_system.js            (メインロジック・データ変数保持)
         |- public/                  (静的ファイル)
-            |- index.html           (トップページ)
             |- pref_new.html        (新規作成フォーム)
         |- views/                   (EJSテンプレート)
             |- pref/                (都道府県システム)
@@ -46,6 +57,7 @@ webpro_submit/
                 |- pref_detail.ejs  (詳細表示画面)
                 |- pref_edit.ejs    (編集フォーム)
                 |- pref.ejs         (一覧表示画面)
+            |- landing.ejs          (トップページ)
 \end{verbatim}
     \caption{ディレクトリ構成}
     \label{fig:pref_dir}
@@ -62,12 +74,12 @@ webpro_submit/
         \toprule
         機能 & メソッド & パス (URL) & 対応ビュー/処理 \\
         \midrule
+        トップページ & GET & / & views/landing.ejs \\
         一覧表示 & GET & /pref & views/pref/pref.ejs \\
         新規作成フォーム & GET & /pref/create & public/pref\_new.html \\
         詳細表示 & GET & /pref/:id & views/pref\_detail.ejs \\
         編集フォーム & GET & /pref/edit/:id & views/pref\_edit.ejs \\
         削除確認 & GET & /pref/check/:id & views/pref\_check.ejs \\
-
         \midrule
         新規データ作成 & POST & /pref & 処理後一覧を表示\\
         新規データ作成& POST & /pref/create & 処理後新規作成へリダイレクト \\
@@ -90,64 +102,73 @@ webpro_submit/
     \label{fig:flowchart}
 \end{figure}
 
-\newpage
 
 \section{各機能・リソース詳細}
 
+\subsection{トップページ}
+\begin{itemize}
+    \item URL: /
+    \item 処理: views/landing.ejsを表示する．
+    \item 要素: 各システムへのリンク
+\end{itemize}
+
 \subsection{一覧表示機能}
 \begin{itemize}
-    \item URL: GET /pref
-    \item 処理: サーバー変数の全データをEJSに渡し，for文を用いてテーブル形式でレンダリングする．
-    \item 要素: 「新規登録ボタン」，各行ごとの「詳細リンク」．
+    \item URL: /pref
+    \item 処理: サーバー変数の全データをEJSに渡し，for文を用いてテーブル形式で表示する．
+    \item 要素: 各行ごとの要素の名前に対応する詳細リンク，新規登録ボタン
 \end{itemize}
 
 \subsection{新規作成機能}
 \begin{itemize}
-    \item フォーム (GET /pref/create):
+    \item フォーム: GET /pref/create
         \begin{itemize}
-            \item 表\ref{tab:schema}のidを除くすべてのプロパティを入力フィールドとして表示する．
-            \item 送信先は POST /pref．
+            \item 処理: 表\ref{tab:schema}のidを除くすべてのプロパティを入力フィールドとして表示する．
+            \item 送信先: POST /pref
         \end{itemize}
-    \item 作成処理 (POST /pref):
+    \item 作成処理: POST /pref
         \begin{itemize}
             \item リクエストボディから値を取得．
-            \item 新しいIDを採番し，サーバー変数（配列）にpushする．
+            \item 新しいidを採番し，サーバー変数（配列）にpushする．
+            \item 新規作成したデータの内容をサーバーのターミナルにログ出力する．
             \item 処理完了後，一覧画面(/pref)へリダイレクトする．
         \end{itemize}
 \end{itemize}
 
 \subsection{詳細表示機能}
 \begin{itemize}
-    \item URL: GET /pref/:id
-    \item 処理: URLパラメータのIDに基づき配列を検索し，対象データを表示する．
-    \item 要素: 「編集ボタン」，「削除ボタン」（formタグによる送信），「一覧に戻るリンク」．
+    \item URL: /pref/:id
+    \item 処理: URLパラメータのidに基づき配列を検索し，対象データを表示する．
+    \item 要素: 編集ボタン，削除ボタン，一覧に戻るリンク
 \end{itemize}
 
 \subsection{編集・更新機能}
 \begin{itemize}
-    \item フォーム (GET /pref/edit/:id):
+    \item フォーム: GET /pref/edit/:id
         \begin{itemize}
-            \item 対象データを検索し，value属性に現在の値を埋め込んで表示する．
-            \item 送信先は POST /pref/update/:id．
+            \item 処理: 対象データを検索し，value属性に現在の値を埋め込んで表示する．
+            \item 送信先: POST /pref/update/:id
         \end{itemize}
-    \item 更新処理 (POST /pref/update/:id):
+    \item 更新処理: POST /pref/update/:id
         \begin{itemize}
-            \item IDに基づき配列内の該当インデックスを特定．
+            \item idに基づき配列内の該当インデックスを特定．
             \item リクエストボディの値でプロパティを上書きする．
-            \item 詳細画面(/pref/:id)を表示する．
+            \item 更新内容をサーバーのターミナルにログ出力する．
+            \item 更新後，詳細画面(/pref/:id)を表示する．
         \end{itemize}
 \end{itemize}
 
 \subsection{削除機能}
 \begin{itemize}
-    \item フォーム (GET /pref/check/:id):
+    \item フォーム: GET /pref/check/:id
         \begin{itemize}
             \item 簡易確認フォームを表示する．
             \item 確認後、GET /pref/delete/:idで削除処理を実行する．
         \end{itemize}
-    \item 削除処理 (GET /pref/delete/:id):
+    \item 削除処理: GET /pref/delete/:id
         \begin{itemize}
-            \item IDに基づき配列からspliceで要素を取り除く．
-            \item 削除完了後，一覧画面(/pref)へリダイレクトする．
+            \item idに基づき配列からspliceで要素を取り除く．
+            \item 削除した要素の名前をサーバーのターミナルにログ出力する．
+            \item 削除後，一覧画面(/pref)へリダイレクトする．
         \end{itemize}
 \end{itemize}
