@@ -40,6 +40,8 @@ idを除くすべてのデータは入力フォームで作成，編集が可能
     \item 一覧表示の制御: EJSテンプレートのforEachループにおいて，要素がダミーデータまたはnullでない場合のみ行を描画する条件分岐（if文）を設ける．
 \end{itemize}
 
+また，画面のレイアウトおよび配色は，style.cssに定義したスタイルを用いる．
+
 \section{ディレクトリ構成}
 
 本システムは，図\ref{fig:stella_dir}に示すディレクトリ構造に従って，使用するファイルを配置する．
@@ -51,6 +53,7 @@ webpro_submit/
     |- app/
         |- app_system.js              (メインロジック・データ変数保持)
         |- public/                    (静的ファイル)
+            |- style.css              (CSSファイル)
             |- stella_new.html        (新規作成フォーム)
         |- views/                     (EJSテンプレート)
             |- landing.ejs            (トップページ)

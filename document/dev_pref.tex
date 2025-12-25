@@ -39,6 +39,7 @@ idを除くすべてのデータは入力フォームで作成，編集が可能
     \item 削除処理: データを削除する際は，配列から要素を取り除くのではなく，該当のデータをnullに置き換える．これにより，他のデータの配列とidがずれることを防ぐ．
     \item 一覧表示の制御: EJSテンプレートのforEachループにおいて，要素がダミーデータまたはnullでない場合のみ行を描画する条件分岐（if文）を設ける．
 \end{itemize}
+また，画面のレイアウトおよび配色は，style.cssに定義したスタイルを用いる．
 
 \section{ディレクトリ構成}
 
@@ -51,14 +52,15 @@ webpro_submit/
     |- app/
         |- app_system.js            (メインロジック・データ変数保持)
         |- public/                  (静的ファイル)
+            |- style.css            (CSSファイル)
             |- pref_new.html        (新規作成フォーム)
         |- views/                   (EJSテンプレート)
+            |- landing.ejs          (トップページ)
             |- pref/                (都道府県システム)
                 |- pref_check.ejs   (削除確認画面)
                 |- pref_detail.ejs  (詳細表示画面)
                 |- pref_edit.ejs    (編集フォーム)
                 |- pref.ejs         (一覧表示画面)
-            |- landing.ejs          (トップページ)
 \end{verbatim}
     \caption{ディレクトリ構成}
     \label{fig:pref_dir}
