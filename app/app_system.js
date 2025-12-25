@@ -232,14 +232,14 @@ app.get("/stella/delete/:id", (req, res) => {
 
 let elements = [
     { id: 0, name: "元素" , code: "", symbol: "", mass: "", property: "", group: "" },
-    { id: 1, name: "オリオン座" , en: "Orion", shape: "男性", height: "57", star: "ベテルギウス", season: "冬" },
-    { id: 2, name: "かに座" , en: "Cancer", shape: "動物", height: "74", star: "アクベンス", season: "春" },
-    { id: 3, name: "カシオペヤ座" , en: "Cassiopeia", shape: "女性", height: "N66", star: "シェダル", season: "秋" },
-    { id: 4, name: "はくちょう座" , en: "Cygnus", shape: "動物", height: "N83", star: "デネブ", season: "夏" },
-    { id: 5, name: "さそり座" , en: "Scorpius", shape: "動物", height: "28", star: "アンタレス", season: "夏" },
-    { id: 6, name: "こぐま座" , en: "Ursa minor", shape: "動物", height: "N48", star: "北極星", season: "春" },
-    { id: 7, name: "ケンタウルス座" , en: "Centaurus", shape: "空想動物", height: "8", star: "リギル・ケンタウルス", season: "南天" },
-    { id: 8, name: "こと座" , en: "Lyra", shape: "道具", height: "90", star: "ベガ", season: "夏"}
+    { id: 1, name: "水素" , code: "1", symbol: "H", mass: "1.0", property: "非金属", group: "1" },
+    { id: 2, name: "酸素" , code: "8", symbol: "O", mass: "16", property: "非金属", group: "16" },
+    { id: 3, name: "炭素" , code: "6", symbol: "C", mass: "12", property: "非金属", group: "14" },
+    { id: 4, name: "窒素" , code: "7", symbol: "N", mass: "14", property: "非金属", group: "15" },
+    { id: 5, name: "アルミニウム" , code: "13", symbol: "Al", mass: "27", property: "金属", group: "13" },
+    { id: 6, name: "金" , code: "79", symbol: "Au", mass: "197", property: "金属", group: "11" },
+    { id: 7, name: "鉄" , code: "26", symbol: "Fe", mass: "56", property: "金属", group: "8" },
+    { id: 8, name: "ラドン" , code: "86", symbol: "Rn", mass: "222", property: "非金属", group: "18" },
 ];
 
 //一覧
@@ -290,12 +290,13 @@ app.get("/element/check/:id", (req, res) => {
 app.post("/element", (req, res) => {
     const id = elements.length;
     const name = req.body.name;
-    const en = req.body.en;
-    const shape = req.body.shape;
-    const height = req.body.height;
-    const star = req.body.star;
-    const season = req.body.season;
-    elements.push({ id: id, name: name, en: en, shape: shape, height: height, star: star, season: season });
+    const en = req.body.en
+    const code = req.body.code;
+    const symbol = req.body.symbol;
+    const mass = req.body.mass;
+    const property = req.body.property;
+    const group = req.body.group;
+    elements.push({ id: id, name: name, en: en, code: code, symbol: symbol, mass: mass, property: property, group: group });
     console.log('新規追加後の星座：', req.body);
 
     if (req.body.page === '登録して新たに作成') {
@@ -308,11 +309,11 @@ app.post("/element", (req, res) => {
 //更新処理
 app.post("/element/update/:id", (req, res) => {
     elements[req.params.id].name = req.body.name;
-    elements[req.params.id].en = req.body.en;
-    elements[req.params.id].shape = req.body.shape;
-    elements[req.params.id].height = req.body.height;
-    elements[req.params.id].star = req.body.star;
-    elements[req.params.id].season = req.body.season;
+    elements[req.params.id].code = req.body.code;
+    elements[req.params.id].symbol = req.body.symbol;
+    elements[req.params.id].mass = req.body.mass;
+    elements[req.params.id].property = req.body.property;
+    elements[req.params.id].group = req.body.group;
     console.log('更新後の星座：', elements[req.params.id]);
     res.render('element/element_detail', {id: req.params.id, data: elements[req.params.id]} );
 });

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>元素の新規登録</title>
+</head>
+<body>
+    <h1>元素の新規登録</h1>
+    <p>以下の項目を入力してください</p>
+    <form action="/element" method="POST">
+        <table>
+            <input type="text" name="name" required>
+            <label for="name">元素名（例：水素）</label><br>
+            <input type="text" name="code" required>
+            <label for="code">原子番号（例：1）</label><br>
+            <input type="text" name="symbol" required>
+            <label for="symbol">元素記号（例：H）</label><br>
+            <input type="text" name="mass" required>
+            <label for="mass">原子質量数（例：1.0）</label><br>
+            <input type="text" name="property" required>
+            <label for="property">元素の性質（例：非金属）</label><br>
+            <input type="text" name="group" required>
+            <label for="group">元素の族（例：1）</label><br>
+            <input type="submit" name="page" value="登録" required>
+            <input type="submit" name="page" value="登録して新たに作成" required>
+        </table>
+    </form>
+
+    <a href="/element">一覧に戻る</a>
+</body>
+</html>
