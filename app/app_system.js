@@ -21,6 +21,11 @@ let prefectures = [
     { id: 1, name: "東京都" ,code: 13, area: 2199.94, population: 14273066, capital: "新宿区", region: "関東" },
     { id: 2, name: "大阪府" ,code: 27, area: 1905.25, population: 8777998, capital: "大阪市", region: "近畿" },
     { id: 3, name: "福岡県" ,code: 40, area: 4987.66, population: 5088841, capital: "福岡市", region: "九州" },
+    { id: 4, name: "北海道" ,code: 1, area: 83422.26, population: 4993042, capital: "札幌市", region: "北海道" },
+    { id: 5, name: "愛知県" ,code: 26, area: 5173.22, population: 7453803, capital: "名古屋市", region: "中部" },
+    { id: 6, name: "宮城県" ,code: 4, area: 7282.31, population: 2230717, capital: "仙台市", region: "東北" },
+    { id: 7, name: "広島県" ,code: 34, area: 8478.13, population: 2694648, capital: "広島市", region: "中国" },
+    { id: 8, name: "高知県" ,code: 39, area: 7102.27, population: 644881, capital: "高知市", region: "四国" },
 ];
 
 //一覧
@@ -290,14 +295,13 @@ app.get("/element/check/:id", (req, res) => {
 app.post("/element", (req, res) => {
     const id = elements.length;
     const name = req.body.name;
-    const en = req.body.en
     const code = req.body.code;
     const symbol = req.body.symbol;
     const mass = req.body.mass;
     const property = req.body.property;
     const group = req.body.group;
-    elements.push({ id: id, name: name, en: en, code: code, symbol: symbol, mass: mass, property: property, group: group });
-    console.log('新規追加後の星座：', req.body);
+    elements.push({ id: id, name: name, code: code, symbol: symbol, mass: mass, property: property, group: group });
+    console.log('新規追加後の元素：', req.body);
 
     if (req.body.page === '登録して新たに作成') {
         res.redirect('/element/create');
@@ -314,7 +318,7 @@ app.post("/element/update/:id", (req, res) => {
     elements[req.params.id].mass = req.body.mass;
     elements[req.params.id].property = req.body.property;
     elements[req.params.id].group = req.body.group;
-    console.log('更新後の星座：', elements[req.params.id]);
+    console.log('更新後の元素：', elements[req.params.id]);
     res.render('element/element_detail', {id: req.params.id, data: elements[req.params.id]} );
 });
 
