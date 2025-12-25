@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>星座の新規登録</title>
+</head>
+<body>
+    <h1>星座の新規登録</h1>
+    <p>以下の項目を入力してください</p>
+    <form action="/stella" method="POST">
+        <table>
+            <input type="text" name="name" required>
+            <label for="name">星座名（例：オリオン座）</label><br>
+            <input type="text" name="en" required>
+            <label for="code">英語表記（例：Orion）</label><br>
+            <input type="text" name="shape" required>
+            <label for="area">星座の形状（例：男性）</label><br>
+            <input type="text" name="height" required>
+            <label for="population">星座の高さ(°)（例：57）</label><br>
+            <input type="text" name="star" required>
+            <label for="capital">星座を代表する星（例：ベテルギウス）</label><br>
+            <input type="text" name="season" required>
+            <label for="region">星座の季節（例：冬）</label><br>
+            <input type="submit" name="page" value="登録" required>
+            <input type="submit" name="page" value="登録して新たに作成" required>
+        </table>
+    </form>
+
+    <a href="/stella">一覧に戻る</a>
+</body>
+</html>

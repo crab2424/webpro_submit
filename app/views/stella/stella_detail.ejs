@@ -21,32 +21,32 @@
                 <td><%= data.id %></td>
             </tr>
             <tr>
-                <td>都道府県名</td>
+                <td>星座名</td>
                 <td><%= data.name %></td>
             </tr>
             <tr>
-                <td>都道府県番号</td>
-                <td><%= data.code %></td>
+                <td>英語表記</td>
+                <td><%= data.en %></td>
             </tr>
             <tr>
-                <td>面積</td>
-                <td><%= data.area %>km^2</td>
+                <td>星座の形</td>
+                <td><%= data.shape %></td>
             </tr>
             <tr>
-                <td>人口</td>
-                <td><%= data.population %>人</td>
+                <td>高度</td>
+                <td><%= data.height %>°</td>
             </tr>
             <tr>
-                <td>県庁所在地</td>
-                <td><%= data.capital %></td>
+                <td>星座を代表する星</td>
+                <td><%= data.star %></td>
             </tr>
             <tr>
-                <td>地方</td>
-                <td><%= data.region %></td>
+                <td>季節</td>
+                <td><%= data.season %></td>
             </tr>
         </table>
-        <a href="/pref/edit/<%= id %>">編集</a><br>
-        <a href="/pref/check/<%= id %>">削除</a><br>
-        <a href="/pref">一覧に戻る</a>
+        <a href="/stella/edit/<%= id %>">編集</a><br>
+        <a href="/stella/check/<%= id %>">削除</a><br>
+        <a href="/stella">一覧に戻る</a>
     </body>
 </html>

@@ -6,7 +6,7 @@
     </head>
     <body>
         <h2><%= data.name %>の編集</h2>
-        <form action="/pref/update/<%= data.id %>" method="POST">
+        <form action="/stella/update/<%= data.id %>" method="POST">
             <table>
                 <tr>
                     <th>項目</th>
@@ -14,12 +14,10 @@
                 </tr>
                 <tr>
                     <td>ID</td>
-                    <td>
-                        <input type="text" name="id" value="<%= data.id %>" />
-                    </td>
+                    <td><%= data.id %></td>
                 </tr>
                 <tr>
-                    <td>都道府県名</td>
+                    <td>星座名</td>
                     <td>
                         <input
                             type="text"
@@ -29,59 +27,55 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>都道府県番号</td>
+                    <td>英語表記</td>
+                    <td>
+                        <input type="text" name="en" value="<%= data.en %>" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>星座の形</td>
                     <td>
                         <input
                             type="text"
-                            name="code"
-                            value="<%= data.code %>"
+                            name="shape"
+                            value="<%= data.shape %>"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <td>面積</td>
+                    <td>高度(°)</td>
                     <td>
                         <input
                             type="text"
-                            name="area"
-                            value="<%= data.area %>"
+                            name="height"
+                            value="<%= data.height %>"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <td>人口</td>
+                    <td>星座を代表する星</td>
                     <td>
                         <input
                             type="text"
-                            name="population"
-                            value="<%= data.population %>"
+                            name="star"
+                            value="<%= data.star %>"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <td>県庁所在地</td>
+                    <td>季節</td>
                     <td>
                         <input
                             type="text"
-                            name="capital"
-                            value="<%= data.capital %>"
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <td>地方</td>
-                    <td>
-                        <input
-                            type="text"
-                            name="region"
-                            value="<%= data.region %>"
+                            name="season"
+                            value="<%= data.season %>"
                         />
                     </td>
                 </tr>
             </table>
             <input type="submit" values="更新" />
         </form>
-        <a href="/pref/<%= data.id %>">詳細に戻る</a><br>
-        <a href="/pref/">一覧に戻る</a>
+        <a href="/stella/<%= data.id %>">詳細に戻る</a><br />
+        <a href="/stella/">一覧に戻る</a>
     </body>
 </html>

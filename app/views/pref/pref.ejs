@@ -13,13 +13,13 @@
                 <th>都道府県名</th>
                 <th>都道府県番号</th>
             </tr>
-            <% let id = 1 %> <% for( let row of data.slice(1) ) { %>
+            <% let number = 1 %> <% for( let row of data.slice(1) ) { %>
             <tr>
-                <td><%= id %></td>
-                <td><a href="/pref/<%= id %>"><%= row.name %></a></td>
+                <td><%= row.id %></td>
+                <td><a href="/pref/<%= number %>"><%= row.name %></a></td>
                 <td><%= row.code %></td>
             </tr>
-            <% id += 1 %> <% } %>
+            <% number += 1 %> <% } %>
         </table>
         <a href="/public/pref_new.html">追加</a><br>
         <a href="/">トップへ戻る</a>

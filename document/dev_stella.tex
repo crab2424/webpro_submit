@@ -20,10 +20,10 @@
         \midrule
         id & Number & 一意な識別子 \\
         name & String & 星座名 \\
-        en & String & 英名 \\
-        place & Number & 象徴的な星座の位置 \\
-        code & Number & 代表的な恒星 \\
-        creator & String & 命名者 \\
+        en & String & 英語表記 \\
+        shape & String & 星座の形 \\
+        height & String & 高度($^\circ$) \\
+        star & String & 代表する星 \\
         season & String & 季節 \\
         \bottomrule
     \end{tabular}
@@ -41,7 +41,7 @@ idを除くすべてのデータは入力フォームで作成，編集が可能
 
 \section{ディレクトリ構成}
 
-本システムは，図\ref{fig:pref_dir}に示すディレクトリ構造に従って，使用するファイルを配置する．
+本システムは，図\ref{fig:stella_dir}に示すディレクトリ構造に従って，使用するファイルを配置する．
 
 \begin{figure}[H]
     \centering
@@ -50,17 +50,17 @@ webpro_submit/
     |- app/
         |- app_system.js            (メインロジック・データ変数保持)
         |- public/                  (静的ファイル)
-            |- pref_new.html        (新規作成フォーム)
+            |- stella_new.html        (新規作成フォーム)
         |- views/                   (EJSテンプレート)
-            |- pref/                (星座システム)
-                |- pref_check.ejs   (削除確認画面)
-                |- pref_detail.ejs  (詳細表示画面)
-                |- pref_edit.ejs    (編集フォーム)
-                |- pref.ejs         (一覧表示画面)
+            |- stella/                (星座システム)
+                |- stella_check.ejs   (削除確認画面)
+                |- stella_detail.ejs  (詳細表示画面)
+                |- stella_edit.ejs    (編集フォーム)
+                |- stella.ejs         (一覧表示画面)
             |- landing.ejs          (トップページ)
 \end{verbatim}
     \caption{ディレクトリ構成}
-    \label{fig:pref_dir}
+    \label{fig:stella_dir}
 \end{figure}
 
 \section{HTTPメソッドとルーティング}
@@ -75,16 +75,16 @@ webpro_submit/
         機能 & メソッド & パス (URL) & 対応ビュー\\
         \midrule
         トップページ & GET & / & views/landing.ejs \\
-        一覧表示 & GET & /pref & views/pref/pref.ejs \\
-        新規作成フォーム & GET & /pref/create & public/pref\_new.html \\
-        詳細表示 & GET & /pref/:id & views/pref\_detail.ejs \\
-        編集フォーム & GET & /pref/edit/:id & views/pref\_edit.ejs \\
-        削除確認 & GET & /pref/check/:id & views/pref\_check.ejs \\
+        一覧表示 & GET & /stella & views/stella/stella.ejs \\
+        新規作成フォーム & GET & /stella/create & public/stella\_new.html \\
+        詳細表示 & GET & /stella/:id & views/stella\_detail.ejs \\
+        編集フォーム & GET & /stella/edit/:id & views/stella\_edit.ejs \\
+        削除確認 & GET & /stella/check/:id & views/stella\_check.ejs \\
         \midrule
-        新規データ作成 & POST & /pref & 処理後一覧を表示\\
-        新規データ作成& POST & /pref/create & 処理後新規作成へリダイレクト \\
-        データ更新 & POST & /pref/update/:id & 処理後詳細ページを表示 \\
-        データ削除 & GET & /pref/delete/:id & 処理後一覧へリダイレクト \\
+        新規データ作成 & POST & /stella & 処理後一覧を表示\\
+        新規データ作成& POST & /stella/create & 処理後新規作成へリダイレクト \\
+        データ更新 & POST & /stella/update/:id & 処理後詳細ページを表示 \\
+        データ削除 & GET & /stella/delete/:id & 処理後一覧へリダイレクト \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -97,7 +97,7 @@ webpro_submit/
 % フローチャート配置場所
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{fig/dev_pref/flowchart-1.pdf}
+    \includegraphics[width=\textwidth]{fig/dev_stella/flowchart-1.pdf}
     \caption{画面遷移フローチャート}
     \label{fig:flowchart}
 \end{figure}
@@ -114,62 +114,62 @@ webpro_submit/
 
 \subsection{一覧表示機能}
 \begin{itemize}
-    \item URL: /pref
+    \item URL: /stella
     \item 処理: サーバー変数の全データをEJSに渡し，for文を用いてテーブル形式で表示する．
     \item 要素: 各行ごとの要素の名前に対応する詳細リンク，追加ボタン
 \end{itemize}
 
 \subsection{新規作成機能}
 \begin{itemize}
-    \item フォーム: GET /pref/create
+    \item フォーム: GET /stella/create
         \begin{itemize}
             \item 処理: 表\ref{tab:schema}のidを除くすべてのプロパティを入力フィールドとして表示する．
-            \item 送信先: POST /pref
+            \item 送信先: POST /stella
             \item 要素: 各プロパティに対応する入力フィールド，登録ボタン，登録後新規作成ボタン
         \end{itemize}
-    \item 作成処理: POST /pref
+    \item 作成処理: POST /stella
         \begin{itemize}
             \item リクエストボディから値を取得．
             \item 新しいidを採番し，サーバー変数（配列）にpushする．
             \item 新規作成したデータの内容をサーバーのターミナルにログ出力する．
-            \item 処理完了後，一覧画面(/pref)へリダイレクトする．
+            \item 処理完了後，一覧画面(/stella)へリダイレクトする．
         \end{itemize}
 \end{itemize}
 
 \subsection{詳細表示機能}
 \begin{itemize}
-    \item URL: /pref/:id
+    \item URL: /stella/:id
     \item 処理: URLパラメータのidに基づき配列を検索し，対象データを表示する．
     \item 要素: 編集ボタン，削除ボタン，一覧に戻るリンク
 \end{itemize}
 
 \subsection{編集・更新機能}
 \begin{itemize}
-    \item フォーム: GET /pref/edit/:id
+    \item フォーム: GET /stella/edit/:id
         \begin{itemize}
             \item 処理: 対象データを検索し，value属性に現在の値を埋め込んで表示する．
-            \item 送信先: POST /pref/update/:id
+            \item 送信先: POST /stella/update/:id
         \end{itemize}
-    \item 更新処理: POST /pref/update/:id
+    \item 更新処理: POST /stella/update/:id
         \begin{itemize}
             \item idに基づき配列内の該当インデックスを特定．
             \item リクエストボディの値でプロパティを上書きする．
             \item 表示: 更新内容をサーバーのターミナルにログ出力する．
-            \item 更新後，詳細画面(/pref/:id)を表示する．
+            \item 更新後，詳細画面(/stella/:id)を表示する．
         \end{itemize}
 \end{itemize}
 
 \subsection{削除機能}
 \begin{itemize}
-    \item フォーム: GET /pref/check/:id
+    \item フォーム: GET /stella/check/:id
         \begin{itemize}
             \item 処理: 簡易確認フォームを表示する．
-            \item 送信先: GET /pref/delete/:id
+            \item 送信先: GET /stella/delete/:id
         \end{itemize}
-    \item 削除処理: GET /pref/delete/:id
+    \item 削除処理: GET /stella/delete/:id
         \begin{itemize}
             \item idに基づき配列からspliceで要素を取り除く．
             \item 削除した要素の名前をサーバーのターミナルにログ出力する．
-            \item 削除後，一覧画面(/pref)へリダイレクトする．
+            \item 削除後，一覧画面(/stella)へリダイレクトする．
         \end{itemize}
 \end{itemize}
