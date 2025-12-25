@@ -14,6 +14,17 @@ table {
     margin-bottom: 20px;
 }
 
+/* オリジナル横余白 */
+hspace {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+/* 中央寄せ */
+div {
+    text-align: center;
+    margin-top: 20px;
+}
 
 th, td {
     border: 1px solid #c0c0c0;
@@ -25,6 +36,9 @@ th {
     background-color: #f2f2f2;
 }
 
+input {
+    padding: 3px;
+}
 /* 一覧表示用 */
 .table-show tr > :nth-child(1) {
     width: 50px;
@@ -36,18 +50,27 @@ th {
 }
 
 
+/* 新規作成用 */
+.table-new input {
+    width: 40%;
+    border: 1px solid #c0c0c0;
+    padding: 10px;
+    text-align: center;
+}
+
+
 /* 送信ボタンのデザイン */
 input[type="submit"] {
-    font-size: 18px;      /* 文字の大きさ */
-    padding: 10px 30px;   /* ボタンの内側の余白（上下 左右） */
-    width: 200px;         /* ボタンの横幅（固定したい場合） */
-    height: 50px;         /* ボタンの高さ */
-    cursor: pointer;      /* マウスを乗せたときに指マークにする */
+    font-size: 18px;
+    padding: 10px 30px;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
 
-    background-color: #4CAF50; /* 緑色の背景 */
-    color: white;              /* 文字を白く */
-    border: none;              /* 枠線を消す */
-    border-radius: 5px;        /* 角を少し丸くする */
+    background-color: #1f9e23;
+    color: white;
+    border: none;
+    border-radius: 5px;
 }
 
 

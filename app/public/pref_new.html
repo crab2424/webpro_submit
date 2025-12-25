@@ -1,32 +1,47 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>都道府県の新規登録</title>
-    <link rel="stylesheet" href="../../public/style.css">
-</head>
-<body>
-    <h1>都道府県の新規登録</h1>
-    <p>以下の項目を入力してください</p>
-    <form action="/pref" method="POST">
-        <table>
-            <input type="text" name="name" required>
-            <label for="name">都道府県名（例：東京都）</label><br>
-            <input type="text" name="code" required>
-            <label for="code">都道府県番号（例：13）</label><br>
-            <input type="text" name="area" required>
-            <label for="area">面積(km^2)（例：2199.94）</label><br>
-            <input type="text" name="population" required>
-            <label for="population">人口(人)（例：14273066）</label><br>
-            <input type="text" name="capital" required>
-            <label for="capital">都道府県庁所在地（例：新宿区）</label><br>
-            <input type="text" name="region" required>
-            <label for="region">地方区分（例：関東）</label><br>
-            <input type="submit" name="page" value="登録" required>
-            <input type="submit" name="page" value="登録して新たに作成" required>
-        </table>
-    </form>
+    <head>
+        <meta charset="UTF-8" />
+        <title>都道府県の新規登録</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <h2>都道府県の新規登録</h2>
+        <p>以下の項目を入力してください</p>
+        <form action="/pref" method="POST">
+            <table class="pref-table">
+                <tr>
+                    <th>都道府県名<br />（例：東京都）</th>
+                    <td><input type="text" name="name" required /></td>
+                </tr>
+                <tr>
+                    <th>都道府県番号<br />（例：13）</th>
+                    <td><input type="text" name="code" required /></td>
+                </tr>
+                <tr>
+                    <th>面積(km^2)<br />（例：2199.94）</th>
+                    <td><input type="text" name="area" required /></td>
+                </tr>
+                <tr>
+                    <th>人口(人)<br />（例：14273066）</th>
+                    <td><input type="text" name="population" required /></td>
+                </tr>
+                <tr>
+                    <th>都道府県庁所在地<br />（例：新宿区）</th>
+                    <td><input type="text" name="capital" required /></td>
+                </tr>
+                <tr>
+                    <th>地方区分<br />（例：関東）</th>
+                    <td><input type="text" name="region" required /></td>
+                </tr>
+            </table>
 
-    <a href="/pref">一覧に戻る</a>
-</body>
+            <div style="margin-top: 30px">
+                <input type="submit" name="page" value="登録" />
+                <input type="submit" name="page" value="登録して新たに作成" style="margin-left: 50px;"/>
+            </div>
+        </form>
+
+        <a href="/pref" >一覧に戻る</a>
+    </body>
 </html>
