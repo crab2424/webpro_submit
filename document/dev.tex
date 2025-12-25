@@ -8,12 +8,12 @@
 \section{データ管理}
 
 \subsection{データ構造}
-サーバー内の配列変数で管理するデータ構造は表\ref{tab:schema}の通りに構成する．
+サーバー内の配列変数で管理するデータ構造は表\ref{tab:resource_schema}の通りに構成する．
 
 \begin{table}[H]
     \centering
     \caption{都道府県データ構造}
-    \label{tab:schema}
+    \label{tab:resource_schema}
     \begin{tabular}{c|c|c}
         \toprule
         プロパティ名 & データ型 & 説明 \\
@@ -65,12 +65,12 @@ webpro_submit/
 \end{figure}
 
 \section{HTTPメソッドとルーティング}
-本システムにおける各URLとHTTPメソッド，および対応する処理を表\ref{tab:routing}に定義する．
+本システムにおける各URLとHTTPメソッド，および対応する処理を表\ref{tab:resource_routing}に定義する．
 
 \begin{table}[H]
     \centering
     \caption{ルーティング一覧}
-    \label{tab:routing}
+    \label{tab:resource_routing}
     \begin{tabular}{llll}
         \toprule
         機能 & メソッド & パス (URL) & 対応ビュー\\
@@ -92,7 +92,7 @@ webpro_submit/
 
 \section{ページ遷移}
 
-本システムにおける画面間の遷移を図\ref{fig:flowchart}に示す．なお，本システムのページには戻るリンクを配置するため，一覧表示ページ及び詳細表示ページに直接遷移することが可能である．
+本システムにおける画面間の遷移を図\ref{fig:resource_flowchart}に示す．なお，本システムのページには戻るリンクを配置するため，一覧表示ページ及び詳細表示ページに直接遷移することが可能である．
 
 \vspace{1cm}
 % フローチャート配置場所
@@ -100,7 +100,7 @@ webpro_submit/
     \centering
     \includegraphics[width=\textwidth]{fig/dev_resource/flowchart-1.pdf}
     \caption{画面遷移フローチャート}
-    \label{fig:flowchart}
+    \label{fig:resource_flowchart}
 \end{figure}
 
 
@@ -127,7 +127,7 @@ webpro_submit/
 \begin{itemize}
     \item フォーム: GET /resource/create
         \begin{itemize}
-            \item 処理: 表\ref{tab:schema}のidを除くすべてのプロパティを入力フィールドとして表示する．
+            \item 処理: 表\ref{tab:resource_schema}のidを除くすべてのプロパティを入力フィールドとして表示する．
             \item 送信先: POST /resource
             \item 要素: 各プロパティに対応する入力フィールド，登録ボタン，登録後新規作成ボタン
         \end{itemize}
@@ -143,7 +143,7 @@ webpro_submit/
 \subsection{詳細表示機能}
 \begin{itemize}
     \item URL: /resource/:id
-    \item 処理: URLパラメータのidに基づき配列を検索し，対象データを表示する．
+    \item 処理: URLパラメータのidに基づき配列を検索し，対象データを表示する．指定したidに対応するデータが存在しない場合は，一覧表示ページ(/resource)へリダイレクトする．
     \item 要素: 編集ボタン，削除ボタン，一覧に戻るリンク
 \end{itemize}
 
@@ -151,7 +151,7 @@ webpro_submit/
 \begin{itemize}
     \item フォーム: GET /resource/edit/:id
         \begin{itemize}
-            \item 処理: 対象データを検索し，value属性に現在の値を埋め込んで表示する．
+            \item 処理: 対象データを検索し，value属性に現在の値を埋め込んで表示する．指定したidに対応するデータが存在しない場合は，一覧表示ページ(/resource)へリダイレクトする．
             \item 送信先: POST /resource/update/:id
         \end{itemize}
     \item 更新処理: POST /resource/update/:id
@@ -167,12 +167,12 @@ webpro_submit/
 \begin{itemize}
     \item フォーム: GET /resource/check/:id
         \begin{itemize}
-            \item 簡易確認フォームを表示する．
+            \item 簡易確認フォームを表示する．指定したidに対応するデータが存在しない場合は，一覧表示ページ(/resource)へリダイレクトする．
             \item 確認後、GET /resource/delete/:idで削除処理を実行する．
         \end{itemize}
     \item 削除処理: GET /resource/delete/:id
         \begin{itemize}
-            \item idに対応する配列要素にnullを代入し，データを削除状態にする（配列の要素数は変更しない）．
+            \item idに対応する配列要素にnullを代入し，データを削除状態にする（配列の要素数は変更しない）．削除対象の指定したidに対応するデータが元から存在しない場合は，一覧表示ページ(/resource)へリダイレクトする．
             \item 削除した要素名をコンソールに出力する．
             \item 削除完了後，一覧画面(/resource)へリダイレクトする．
         \end{itemize}

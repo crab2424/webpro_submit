@@ -8,10 +8,10 @@
             text-align: center;
         }
     </style>
-    <title>都道府県削除</title>
+    <title>元素削除</title>
 </head>
 <body>
-    <h2>以下の都道府県を削除します。よろしいですか？</h2>
+    <h2>以下の元素を削除します。よろしいですか？</h2>
     <table>
             <tr>
                 <th>項目</th>
@@ -22,34 +22,34 @@
                 <td><%= data.id %></td>
             </tr>
             <tr>
-                <td>都道府県名</td>
+                <td>元素名</td>
                 <td><%= data.name %></td>
             </tr>
             <tr>
-                <td>都道府県番号</td>
+                <td>原子番号</td>
                 <td><%= data.code %></td>
             </tr>
             <tr>
-                <td>面積</td>
-                <td><%= data.area %>km^2</td>
+                <td>元素記号</td>
+                <td><%= data.symbol %></td>
             </tr>
             <tr>
-                <td>人口</td>
-                <td><%= data.population %>人</td>
+                <td>原子質量数</td>
+                <td><%= data.mass %></td>
             </tr>
             <tr>
-                <td>県庁所在地</td>
-                <td><%= data.capital %></td>
+                <td>元素の性質</td>
+                <td><%= data.property %></td>
             </tr>
             <tr>
-                <td>地方</td>
-                <td><%= data.region %></td>
+                <td>元素の族</td>
+                <td><%= data.group %></td>
             </tr>
         </table>
-    <form action="/pref/delete/<%= data.id %>">
+    <form action="/element/delete/<%= data.id %>">
         <input type="submit" value="削除">
     </form>
-    <a href="/pref/<%= data.id %>">詳細に戻る</a><br>
-    <a href="/pref">一覧に戻る</a>
+    <a href="/element/<%= data.id %>">詳細に戻る</a><br>
+    <a href="/element">一覧に戻る</a>
 </body>
 </html>

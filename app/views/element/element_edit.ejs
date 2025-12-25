@@ -6,7 +6,7 @@
     </head>
     <body>
         <h2><%= data.name %>の編集</h2>
-        <form action="/pref/update/<%= data.id %>" method="POST">
+        <form action="/element/update/<%= data.id %>" method="POST">
             <table>
                 <tr>
                     <th>項目</th>
@@ -19,7 +19,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>都道府県名</td>
+                    <td>元素名</td>
                     <td>
                         <input
                             type="text"
@@ -29,7 +29,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>都道府県番号</td>
+                    <td>原子番号</td>
                     <td>
                         <input
                             type="text"
@@ -39,49 +39,49 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>面積</td>
+                    <td>元素記号</td>
                     <td>
                         <input
                             type="text"
-                            name="area"
-                            value="<%= data.area %>"
+                            name="symbol"
+                            value="<%= data.symbol %>"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <td>人口</td>
+                    <td>原子質量数</td>
                     <td>
                         <input
                             type="text"
-                            name="population"
-                            value="<%= data.population %>"
+                            name="mass"
+                            value="<%= data.mass %>"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <td>県庁所在地</td>
+                    <td>元素の性質</td>
                     <td>
                         <input
                             type="text"
-                            name="capital"
-                            value="<%= data.capital %>"
+                            name="property"
+                            value="<%= data.property %>"
                         />
                     </td>
                 </tr>
                 <tr>
-                    <td>地方</td>
+                    <td>元素の族</td>
                     <td>
                         <input
                             type="text"
-                            name="region"
-                            value="<%= data.region %>"
+                            name="group"
+                            value="<%= data.group %>"
                         />
                     </td>
                 </tr>
             </table>
             <input type="submit" values="更新" />
         </form>
-        <a href="/pref/<%= data.id %>">詳細に戻る</a><br>
-        <a href="/pref/">一覧に戻る</a>
+        <a href="/element/<%= data.id %>">詳細に戻る</a><br>
+        <a href="/element/">一覧に戻る</a>
     </body>
 </html>

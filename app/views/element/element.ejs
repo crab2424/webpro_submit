@@ -11,15 +11,17 @@
             <tr>
                 <th>id</th>
                 <th>元素名</th>
-                <th>元素番号</th>
+                <th>原子番号</th>
             </tr>
-            <% let id = 1 %> <% for( let row of data.slice(1) ) { %>
+            <% data.forEach( (row) => { %>
+                <% if (row !== null && row.id !== 0) { %>
             <tr>
-                <td><%= id %></td>
-                <td><a href="/element/<%= id %>"><%= row.name %></a></td>
+                <td><%= row.id %></td>
+                <td><a href="/element/<%= row.id %>"><%= row.name %></a></td>
                 <td><%= row.code %></td>
             </tr>
-            <% id += 1 %> <% } %>
+            <% } %>
+            <% }); %>
         </table>
         <a href="/public/element_new.html">追加</a><br>
         <a href="/">トップへ戻る</a>

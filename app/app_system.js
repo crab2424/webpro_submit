@@ -101,11 +101,11 @@ app.post("/pref/update/:id", (req, res) => {
 //削除処理
 app.get("/pref/delete/:id", (req, res) => {
     const id = req.params.id;
-    const name = prefectures[id].name;
     // データがないとき
     if (!prefectures[id]) {
         return res.redirect('/pref');
     }
+    const name = prefectures[id].name;
     prefectures[id] = null;
     console.log(name + 'を削除しました');
     res.redirect('/pref');
@@ -210,11 +210,11 @@ app.post("/stella/update/:id", (req, res) => {
 //削除処理
 app.get("/stella/delete/:id", (req, res) => {
     const id = req.params.id;
-    const name = constellations[id].name;
     // データがないとき
     if (!constellations[id]) {
         return res.redirect('/stella');
     }
+    const name = constellations[id].name;
     constellations[id] = null;
     console.log(name + 'を削除しました');
     res.redirect('/stella');
@@ -230,7 +230,105 @@ app.get("/stella/delete/:id", (req, res) => {
 
 //element
 
+let elements = [
+    { id: 0, name: "元素" , code: "", symbol: "", mass: "", property: "", group: "" },
+    { id: 1, name: "オリオン座" , en: "Orion", shape: "男性", height: "57", star: "ベテルギウス", season: "冬" },
+    { id: 2, name: "かに座" , en: "Cancer", shape: "動物", height: "74", star: "アクベンス", season: "春" },
+    { id: 3, name: "カシオペヤ座" , en: "Cassiopeia", shape: "女性", height: "N66", star: "シェダル", season: "秋" },
+    { id: 4, name: "はくちょう座" , en: "Cygnus", shape: "動物", height: "N83", star: "デネブ", season: "夏" },
+    { id: 5, name: "さそり座" , en: "Scorpius", shape: "動物", height: "28", star: "アンタレス", season: "夏" },
+    { id: 6, name: "こぐま座" , en: "Ursa minor", shape: "動物", height: "N48", star: "北極星", season: "春" },
+    { id: 7, name: "ケンタウルス座" , en: "Centaurus", shape: "空想動物", height: "8", star: "リギル・ケンタウルス", season: "南天" },
+    { id: 8, name: "こと座" , en: "Lyra", shape: "道具", height: "90", star: "ベガ", season: "夏"}
+];
 
+//一覧
+app.get("/element", (req, res) => {
+    res.render('element/element', { data: elements });
+});
+
+//新規フォーム
+app.get("/element/create", (req, res) => {
+    res.redirect('/public/element_new.html');
+});
+
+
+//詳細
+app.get("/element/:id", (req, res) => {
+    const number = req.params.id;
+    const detail = elements[number];
+    // データがないとき
+    if (!detail) {
+        return res.redirect('/element');
+    }
+    res.render('element/element_detail', {id: number, data: detail });
+});
+
+//編集フォーム
+app.get("/element/edit/:id", (req, res) => {
+    const number = req.params.id;
+    const detail = elements[number];
+    // データがないとき
+    if (!detail) {
+        return res.redirect('/element');
+    }
+    res.render('element/element_edit', {id: number, data: detail });
+});
+
+//削除確認フォーム
+app.get("/element/check/:id", (req, res) => {
+    const number = req.params.id;
+    const detail = elements[number];
+    // データがないとき
+    if (!detail) {
+        return res.redirect('/element');
+    }
+    res.render('element/element_check', {id: number, data: detail });
+});
+
+//作成処理
+app.post("/element", (req, res) => {
+    const id = elements.length;
+    const name = req.body.name;
+    const en = req.body.en;
+    const shape = req.body.shape;
+    const height = req.body.height;
+    const star = req.body.star;
+    const season = req.body.season;
+    elements.push({ id: id, name: name, en: en, shape: shape, height: height, star: star, season: season });
+    console.log('新規追加後の星座：', req.body);
+
+    if (req.body.page === '登録して新たに作成') {
+        res.redirect('/element/create');
+    } else {
+        res.render('element/element', { data: elements });
+    }
+});
+
+//更新処理
+app.post("/element/update/:id", (req, res) => {
+    elements[req.params.id].name = req.body.name;
+    elements[req.params.id].en = req.body.en;
+    elements[req.params.id].shape = req.body.shape;
+    elements[req.params.id].height = req.body.height;
+    elements[req.params.id].star = req.body.star;
+    elements[req.params.id].season = req.body.season;
+    console.log('更新後の星座：', elements[req.params.id]);
+    res.render('element/element_detail', {id: req.params.id, data: elements[req.params.id]} );
+});
+
+//削除処理
+app.get("/element/delete/:id", (req, res) => {
+    const id = req.params.id;
+    // データがないとき
+    if (!elements[id]) {
+        return res.redirect('/element');
+    }
+    const name = elements[id].name;
+    elements[id] = null;
+    console.log(name + 'を削除しました');
+    res.redirect('/element');
+});
 
 
 
