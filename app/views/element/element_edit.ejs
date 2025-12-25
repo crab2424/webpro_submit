@@ -16,7 +16,7 @@
                 <tr>
                     <td>ID</td>
                     <td>
-                        <input type="text" name="id" value="<%= data.id %>" />
+                        <%= data.id %>
                     </td>
                 </tr>
                 <tr>
@@ -82,7 +82,7 @@
             </table>
             <h2><input type="submit" value="更新" /></h2>
         </form>
-        <a href="/element/<%= data.id %>">詳細に戻る</a><br>
-        <a href="/element/">一覧に戻る</a>
+        <a href="/element/<%= data.id %>">詳細に戻る</a>
+        <a href="/element/" style="margin-left: 30px;">一覧に戻る</a>
     </body>
 </html>

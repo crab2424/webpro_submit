@@ -45,7 +45,9 @@
     <form action="/element/delete/<%= data.id %>">
         <input type="submit" value="削除">
     </form>
-    <a href="/element/<%= data.id %>">詳細に戻る</a><br>
-    <a href="/element">一覧に戻る</a>
+    <div style="margin-top: 20px;">
+        <a href="/element/<%= data.id %>">詳細に戻る</a>
+        <a href="/element" style="margin-left: 30px;">一覧に戻る</a>
+    </div>
 </body>
 </html>

@@ -3,11 +3,12 @@
     <head>
         <meta charset="utf-8" />
         <title><%= data.name %></title>
+        <link rel="stylesheet" href="../../public/style.css">
     </head>
     <body>
         <h2><%= data.name %>の編集</h2>
         <form action="/stella/update/<%= data.id %>" method="POST">
-            <table>
+            <table class="table-detail">
                 <tr>
                     <th>項目</th>
                     <th>データ</th>
@@ -75,7 +76,9 @@
             </table>
             <input type="submit" value="更新" />
         </form>
-        <a href="/stella/<%= data.id %>">詳細に戻る</a><br />
-        <a href="/stella/">一覧に戻る</a>
+        <div style="margin-top: 20px;">
+            <a href="/stella/<%= data.id %>">詳細に戻る</a>
+            <a href="/stella/" style="margin-left: 30px;">一覧に戻る</a>
+        </div>
     </body>
 </html>
