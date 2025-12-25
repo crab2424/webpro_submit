@@ -3,15 +3,11 @@
     <head>
         <meta charset="utf-8" />
         <title><%= data.name %></title>
-        <style>
-            table td:nth-child(2) {
-                text-align: center;
-            }
-        </style>
+        <link rel="stylesheet" href="../../public/style.css">
     </head>
     <body>
         <h2><%= data.name %>の詳細</h2>
-        <table>
+        <table class="table-detail">
             <tr>
                 <th>項目</th>
                 <th>データ</th>
