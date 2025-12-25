@@ -102,7 +102,84 @@ app.get("/pref/delete/:id", (req, res) => {
 
 //constellation
 
+//データ
+let constellations = [
+    { id: 0, name: "星座" ,code: 0, area: 0, population: 0, capital: "", region: "" },
+    { id: 1, name: "東京都" ,code: 13, area: 2199.94, population: 14273066, capital: "新宿区", region: "関東" },
+    { id: 2, name: "大阪府" ,code: 27, area: 1905.25, population: 8777998, capital: "大阪市", region: "近畿" },
+    { id: 3, name: "福岡県" ,code: 40, area: 4987.66, population: 5088841, capital: "福岡市", region: "九州" },
+];
 
+//一覧
+app.get("/stella", (req, res) => {
+    res.render('stella/stella', { data: constellations });
+});
+
+//新規フォーム
+app.get("/stella/create", (req, res) => {
+    res.redirect('/public/pref_new.html');
+});
+
+
+//詳細
+app.get("/stella/:id", (req, res) => {
+    const number = req.params.id;
+    const detail = constellations[number];
+    res.render('stella/stella_detail', {id: number, data: detail });
+});
+
+//編集フォーム
+app.get("/stella/edit/:id", (req, res) => {
+    const number = req.params.id;
+    const detail = constellations[number];
+    res.render('stella/stella_edit', {id: number, data: detail });
+});
+
+//削除確認フォーム
+app.get("/stella/check/:id", (req, res) => {
+    const number = req.params.id;
+    const detail = constellations[number];
+    res.render('stella/stella_check', {id: number, data: detail });
+});
+
+//作成処理
+app.post("/stella", (req, res) => {
+    const id = constellations.length;
+    const name = req.body.name;
+    const code = req.body.code;
+    const area = req.body.area;
+    const population = req.body.population;
+    const capital = req.body.capital;
+    const region = req.body.region;
+    constellations.push({ id: id, name: name, code: code, area: area, population: population, capital: capital, region: region });
+    console.log('新規追加後の星座：', req.body);
+
+    if (req.body.page === '登録して新たに作成') {
+        res.redirect('/stella/create');
+    } else {
+        res.render('stella/stella', { data: constellations });
+    }
+});
+
+//更新処理
+app.post("/stella/update/:id", (req, res) => {
+    constellations[req.params.id].name = req.body.name;
+    constellations[req.params.id].code = req.body.code;
+    constellations[req.params.id].area = req.body.area;
+    constellations[req.params.id].population = req.body.population;
+    constellations[req.params.id].capital = req.body.capital;
+    constellations[req.params.id].region = req.body.region;
+    console.log('更新後の星座：', constellations[req.params.id]);
+    res.render('stella/stella_detail', {id: req.params.id, data: constellations[req.params.id]} );
+});
+
+//削除処理
+app.get("/stella/delete/:id", (req, res) => {
+    const name = constellations[req.params.id].name;
+    constellations.splice(req.params.id, 1);
+    console.log(name + 'を削除しました');
+    res.redirect('/stella');
+});
 
 
 
@@ -114,4 +191,10 @@ app.get("/pref/delete/:id", (req, res) => {
 
 //element
 
+
+
+
+
+
+//app
 app.listen(8080, () => console.log("Example app listening on port 8080!"));
