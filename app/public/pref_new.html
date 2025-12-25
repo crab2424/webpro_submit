@@ -9,29 +9,29 @@
         <h2>都道府県の新規登録</h2>
         <p>以下の項目を入力してください</p>
         <form action="/pref" method="POST">
-            <table class="pref-table">
+            <table class="table-detail">
                 <tr>
-                    <th>都道府県名<br />（例：東京都）</th>
+                    <th>都道府県名（例：東京都）</th>
                     <td><input type="text" name="name" required /></td>
                 </tr>
                 <tr>
-                    <th>都道府県番号<br />（例：13）</th>
+                    <th>都道府県番号（例：13）</th>
                     <td><input type="text" name="code" required /></td>
                 </tr>
                 <tr>
-                    <th>面積(km^2)<br />（例：2199.94）</th>
+                    <th>面積(km^2)（例：2199.94）</th>
                     <td><input type="text" name="area" required /></td>
                 </tr>
                 <tr>
-                    <th>人口(人)<br />（例：14273066）</th>
+                    <th>人口(人)（例：14273066）</th>
                     <td><input type="text" name="population" required /></td>
                 </tr>
                 <tr>
-                    <th>都道府県庁所在地<br />（例：新宿区）</th>
+                    <th>都道府県庁所在地（例：新宿区）</th>
                     <td><input type="text" name="capital" required /></td>
                 </tr>
                 <tr>
-                    <th>地方区分<br />（例：関東）</th>
+                    <th>地方区分（例：関東）</th>
                     <td><input type="text" name="region" required /></td>
                 </tr>
             </table>
@@ -41,7 +41,8 @@
                 <input type="submit" name="page" value="登録して新たに作成" style="margin-left: 50px;"/>
             </div>
         </form>
-
-        <a href="/pref" >一覧に戻る</a>
+            <div style="margin-top: 30px">
+            <a href="/pref">一覧に戻る</a>
+        </div>
     </body>
 </html>

@@ -3,29 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>元素の新規登録</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>元素の新規登録</h1>
     <p>以下の項目を入力してください</p>
     <form action="/element" method="POST">
-        <table>
-            <input type="text" name="name" required>
-            <label for="name">元素名（例：水素）</label><br>
-            <input type="text" name="code" required>
-            <label for="code">原子番号（例：1）</label><br>
-            <input type="text" name="symbol" required>
-            <label for="symbol">元素記号（例：H）</label><br>
-            <input type="text" name="mass" required>
-            <label for="mass">原子質量数（例：1.0）</label><br>
-            <input type="text" name="property" required>
-            <label for="property">元素の性質（例：非金属）</label><br>
-            <input type="text" name="group" required>
-            <label for="group">元素の族（例：1）</label><br>
-            <input type="submit" name="page" value="登録" required>
-            <input type="submit" name="page" value="登録して新たに作成" required>
-        </table>
+        <table class="table-detail">
+                <tr>
+                    <th>元素名（例：水素）</th>
+                    <td><input type="text" name="name" required /></td>
+                </tr>
+                <tr>
+                    <th>原子番号（例：1）</th>
+                    <td><input type="text" name="code" required /></td>
+                </tr>
+                <tr>
+                    <th>元素記号（例：H）</th>
+                    <td><input type="text" name="symbol" required /></td>
+                </tr>
+                <tr>
+                    <th>原子質量数（例：1.0）</th>
+                    <td><input type="text" name="mass" required /></td>
+                </tr>
+                <tr>
+                    <th>元素の性質（例：非金属）</th>
+                    <td><input type="text" name="property" required /></td>
+                </tr>
+                <tr>
+                    <th>元素の族（例：1）</th>
+                    <td><input type="text" name="group" required /></td>
+                </tr>
+            </table>
+            <div style="margin-top: 30px">
+                <input type="submit" name="page" value="登録" />
+                <input type="submit" name="page" value="登録して新たに作成" style="margin-left: 50px;"/>
+            </div>
     </form>
-
-    <a href="/element">一覧に戻る</a>
+    <div style="margin-top: 30px">
+        <a href="/element">一覧に戻る</a>
+    </div>
 </body>
 </html>
+

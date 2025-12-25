@@ -14,12 +14,6 @@ table {
     margin-bottom: 20px;
 }
 
-/* オリジナル横余白 */
-hspace {
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
 /* 中央寄せ */
 div {
     text-align: center;
@@ -44,19 +38,12 @@ input {
     width: 50px;
 }
 
-/* 詳細，削除，編集表示用 */
+/* 追加，詳細，削除，編集表示用 */
 .table-detail tr > :nth-child(1) {
     width: 40%;
 }
 
 
-/* 新規作成用 */
-.table-new input {
-    width: 40%;
-    border: 1px solid #c0c0c0;
-    padding: 10px;
-    text-align: center;
-}
 
 
 /* 送信ボタンのデザイン */
