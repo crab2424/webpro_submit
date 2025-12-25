@@ -38,6 +38,10 @@ app.get("/pref/create", (req, res) => {
 app.get("/pref/:id", (req, res) => {
     const number = req.params.id;
     const detail = prefectures[number];
+    // データがないとき
+    if (!detail) {
+        return res.redirect('/pref');
+    }
     res.render('pref/pref_detail', {id: number, data: detail });
 });
 
@@ -45,6 +49,10 @@ app.get("/pref/:id", (req, res) => {
 app.get("/pref/edit/:id", (req, res) => {
     const number = req.params.id;
     const detail = prefectures[number];
+    // データがないとき
+    if (!detail) {
+        return res.redirect('/pref');
+    }
     res.render('pref/pref_edit', {id: number, data: detail });
 });
 
@@ -52,6 +60,10 @@ app.get("/pref/edit/:id", (req, res) => {
 app.get("/pref/check/:id", (req, res) => {
     const number = req.params.id;
     const detail = prefectures[number];
+    // データがないとき
+    if (!detail) {
+        return res.redirect('/pref');
+    }
     res.render('pref/pref_check', {id: number, data: detail });
 });
 
@@ -88,8 +100,13 @@ app.post("/pref/update/:id", (req, res) => {
 
 //削除処理
 app.get("/pref/delete/:id", (req, res) => {
-    const name = prefectures[req.params.id].name;
-    prefectures.splice(req.params.id, 1);
+    const id = req.params.id;
+    const name = prefectures[id].name;
+    // データがないとき
+    if (!prefectures[id]) {
+        return res.redirect('/pref');
+    }
+    prefectures[id] = null;
     console.log(name + 'を削除しました');
     res.redirect('/pref');
 });
@@ -130,6 +147,10 @@ app.get("/stella/create", (req, res) => {
 app.get("/stella/:id", (req, res) => {
     const number = req.params.id;
     const detail = constellations[number];
+    // データがないとき
+    if (!detail) {
+        return res.redirect('/stella');
+    }
     res.render('stella/stella_detail', {id: number, data: detail });
 });
 
@@ -137,6 +158,10 @@ app.get("/stella/:id", (req, res) => {
 app.get("/stella/edit/:id", (req, res) => {
     const number = req.params.id;
     const detail = constellations[number];
+    // データがないとき
+    if (!detail) {
+        return res.redirect('/stella');
+    }
     res.render('stella/stella_edit', {id: number, data: detail });
 });
 
@@ -144,6 +169,10 @@ app.get("/stella/edit/:id", (req, res) => {
 app.get("/stella/check/:id", (req, res) => {
     const number = req.params.id;
     const detail = constellations[number];
+    // データがないとき
+    if (!detail) {
+        return res.redirect('/stella');
+    }
     res.render('stella/stella_check', {id: number, data: detail });
 });
 
@@ -180,8 +209,13 @@ app.post("/stella/update/:id", (req, res) => {
 
 //削除処理
 app.get("/stella/delete/:id", (req, res) => {
-    const name = constellations[req.params.id].name;
-    constellations.splice(req.params.id, 1);
+    const id = req.params.id;
+    const name = constellations[id].name;
+    // データがないとき
+    if (!constellations[id]) {
+        return res.redirect('/stella');
+    }
+    constellations[id] = null;
     console.log(name + 'を削除しました');
     res.redirect('/stella');
 });

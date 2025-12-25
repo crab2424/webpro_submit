@@ -13,15 +13,17 @@
                 <th>星座名</th>
                 <th>英語表記</th>
             </tr>
-            <% let id = 1 %> <% for( let row of data.slice(1) ) { %>
+            <% data.forEach( (row) => { %>
+                <% if (row !== null && row.id !== 0) { %>
             <tr>
-                <td><%= id %></td>
-                <td><a href="/stella/<%= id %>"><%= row.name %></a></td>
+                <td><%= row.id %></td>
+                <td><a href="/stella/<%= row.id %>"><%= row.name %></a></td>
                 <td><%= row.en %></td>
             </tr>
-            <% id += 1 %> <% } %>
+            <% } %>
+            <% }); %>
         </table>
-        <a href="/public/stella_new.html">追加</a><br>
+        <a href="/public/stella_new.html">追加</a><br />
         <a href="/">トップへ戻る</a>
     </body>
 </html>

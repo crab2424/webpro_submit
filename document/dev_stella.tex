@@ -32,11 +32,12 @@
 idを除くすべてのデータは入力フォームで作成，編集が可能である．idはデータ配列の長さに基づいて自動採番するため，作成時に入力不要である．
 
 \subsection{表示における制約事項}
-本システムでは，データidと配列インデックスの整合性を保つため，以下の仕様を採用する．
+本システムでは，データidと配列の整合性を保つため，以下の仕様を採用する．
 
 \begin{itemize}
-    \item idとインデックスの一致: 配列のインデックスとidを一致させるため，配列のインデックス0番目にはダミーデータを作成し，システム上では非表示とする．
-    \item 一覧表示の処理: idが1番のデータから表示させるため，EJSテンプレート側で配列操作（data.slice(1)）を用いて表示する．
+    \item idと配列: 配列とidの扱いを簡易化させるため，配列の0番目にはダミーデータを作成し，システム上では非表示とする．
+    \item 削除処理: データを削除する際は，配列から要素を取り除くのではなく，該当のデータをnullに置き換える．これにより，他のデータの配列とidがずれることを防ぐ．
+    \item 一覧表示の制御: EJSテンプレートのforEachループにおいて，要素がダミーデータまたはnullでない場合のみ行を描画する条件分岐（if文）を設ける．
 \end{itemize}
 
 \section{ディレクトリ構成}
@@ -48,16 +49,16 @@ idを除くすべてのデータは入力フォームで作成，編集が可能
     \begin{verbatim}
 webpro_submit/
     |- app/
-        |- app_system.js            (メインロジック・データ変数保持)
-        |- public/                  (静的ファイル)
+        |- app_system.js              (メインロジック・データ変数保持)
+        |- public/                    (静的ファイル)
             |- stella_new.html        (新規作成フォーム)
-        |- views/                   (EJSテンプレート)
+        |- views/                     (EJSテンプレート)
+            |- landing.ejs            (トップページ)
             |- stella/                (星座システム)
                 |- stella_check.ejs   (削除確認画面)
                 |- stella_detail.ejs  (詳細表示画面)
                 |- stella_edit.ejs    (編集フォーム)
                 |- stella.ejs         (一覧表示画面)
-            |- landing.ejs          (トップページ)
 \end{verbatim}
     \caption{ディレクトリ構成}
     \label{fig:stella_dir}
@@ -115,7 +116,10 @@ webpro_submit/
 \subsection{一覧表示機能}
 \begin{itemize}
     \item URL: /stella
-    \item 処理: サーバー変数の全データをEJSに渡し，for文を用いてテーブル形式で表示する．
+    \item 処理: サーバー変数の全データをEJSに渡し，forEach文を用いてループ処理を行う．
+        \begin{itemize}
+            \item 条件付きレンダリング: 本システムではid整合性のために空データ(null)やダミーデータ(id:0)を保持している．そのため，forEachループ内で条件分岐を行い，有効なデータ（nullかつid:0でないもの）のみをHTMLテーブルとして出力する．
+        \end{itemize}
     \item 要素: 各行ごとの要素の名前に対応する詳細リンク，追加ボタン
 \end{itemize}
 
@@ -131,7 +135,7 @@ webpro_submit/
         \begin{itemize}
             \item リクエストボディから値を取得．
             \item 新しいidを採番し，サーバー変数（配列）にpushする．
-            \item 新規作成したデータの内容をサーバーのターミナルにログ出力する．
+            \item 新規作成したデータの内容をサーバーのターミナルに出力する．
             \item 処理完了後，一覧画面(/stella)へリダイレクトする．
         \end{itemize}
 \end{itemize}
@@ -139,7 +143,7 @@ webpro_submit/
 \subsection{詳細表示機能}
 \begin{itemize}
     \item URL: /stella/:id
-    \item 処理: URLパラメータのidに基づき配列を検索し，対象データを表示する．
+    \item 処理: URLパラメータのidに基づき配列を検索し，対象データを表示する．なお，指定したidに対応するデータが存在しない場合は，一覧表示ページ(/stella)へリダイレクトする．
     \item 要素: 編集ボタン，削除ボタン，一覧に戻るリンク
 \end{itemize}
 
@@ -147,14 +151,14 @@ webpro_submit/
 \begin{itemize}
     \item フォーム: GET /stella/edit/:id
         \begin{itemize}
-            \item 処理: 対象データを検索し，value属性に現在の値を埋め込んで表示する．
+            \item 処理: 対象データを検索し，value属性に現在の値を埋め込んで表示する．なお，指定したidに対応するデータが存在しない場合は，一覧表示ページ(/stella)へリダイレクトする．
             \item 送信先: POST /stella/update/:id
         \end{itemize}
     \item 更新処理: POST /stella/update/:id
         \begin{itemize}
-            \item idに基づき配列内の該当インデックスを特定．
+            \item idに基づき配列内の該当要素を特定．
             \item リクエストボディの値でプロパティを上書きする．
-            \item 表示: 更新内容をサーバーのターミナルにログ出力する．
+            \item 表示: 更新内容をサーバーのターミナルに出力する．
             \item 更新後，詳細画面(/stella/:id)を表示する．
         \end{itemize}
 \end{itemize}
@@ -163,13 +167,13 @@ webpro_submit/
 \begin{itemize}
     \item フォーム: GET /stella/check/:id
         \begin{itemize}
-            \item 処理: 簡易確認フォームを表示する．
-            \item 送信先: GET /stella/delete/:id
+            \item 簡易確認フォームを表示する．なお，指定したidに対応するデータが存在しない場合は，一覧表示ページ(/stella)へリダイレクトする．
+            \item 確認後、GET /stella/delete/:idで削除処理を実行する．
         \end{itemize}
     \item 削除処理: GET /stella/delete/:id
         \begin{itemize}
-            \item idに基づき配列からspliceで要素を取り除く．
-            \item 削除した要素の名前をサーバーのターミナルにログ出力する．
-            \item 削除後，一覧画面(/stella)へリダイレクトする．
+            \item idに対応する配列要素にnullを代入し，データを削除状態にする（配列の要素数は変更しない）．
+            \item 削除した要素名をコンソールに出力する．
+            \item 削除完了後，一覧画面(/stella)へリダイレクトする．
         \end{itemize}
 \end{itemize}
