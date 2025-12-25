@@ -1,3 +1,68 @@
 \part{管理者向け仕様書}
-\chapter*{管理者向け仕様書}
 
+\section{概要}
+本仕様書は，Node.jsおよびテンプレートエンジンEJSを用いたWebアプリケーションの仕様書である．
+本システムは，サーバーサイドで都道府県データを管理し，EJSを用いて動的にHTMLを生成・表示する．
+データベースの利用は行わず，サーバープロセスのメモリ上（変数）でデータを保持・操作することを前提とする．
+
+\section{インストール方法}
+本システムの動作環境およびインストール手順を以下に示す．
+
+\subsection{動作環境}
+\begin{itemize}
+    \item OS: Windows, macOS, または Linux
+    \item ランタイム: Node.js (推奨バージョン: LTS版)
+    \item パッケージマネージャ: npm
+\end{itemize}
+
+\subsection{セットアップ手順}
+ターミナル（コマンドプロンプト）にて，ソースコードが配置されたディレクトリ（webpro\_submit）に移動し，以下のコマンドを実行して必要なライブラリ（Express, EJS）をインストールする．
+
+\begin{verbatim}
+$ cd webpro_submit
+$ npm install
+\end{verbatim}
+
+
+\section{起動・終了方法}
+
+\subsection{起動方法}
+以下のコマンドを実行してサーバーを起動する．
+
+\begin{verbatim}
+$ node app/app_system.js
+\end{verbatim}
+
+
+起動に成功すると，コンソールに以下のメッセージが表示される．
+\begin{verbatim}
+Example app listening on port 8080!
+\end{verbatim}
+
+
+その後，Webブラウザで以下のURLにアクセスする．
+\begin{center}
+    \url{http://localhost:8080/}
+\end{center}
+
+\subsection{終了方法}
+サーバーを実行しているターミナルにおいて，以下のキーを入力してプロセスを終了する．
+\begin{center}
+    Ctrl + C
+\end{center}
+
+\section{トラブルシューティング}
+
+\subsection{起動できない場合}
+\begin{itemize}
+    \item \textbf{エラー: Address already in use} \\
+    ポート8080が他のプロセスで使用されている可能性がある．他のNode.jsプロセスを終了するか，PCを再起動してから再度実行すること．
+    \item \textbf{エラー: Cannot find module} \\
+    npm install が正しく実行されていない可能性がある．再度インストール手順を確認すること．
+\end{itemize}
+
+\section{既知の不具合・制限事項}
+本システムは学習用アプリケーションとしての仕様上，以下の制限事項が存在する．
+\begin{itemize}
+    \item \textbf{データの非永続性}: データベースを使用せず，サーバーのメモリ上（変数）でデータを管理しているため [cite: 27]，サーバーを再起動または終了すると，追加・編集・削除したデータは初期状態にリセットされる．
+\end{itemize}
