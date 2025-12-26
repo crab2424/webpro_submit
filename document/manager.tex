@@ -22,18 +22,18 @@
 
 \subsubsection{homebrewのインストール}
 JavaScriptを動作させるにあたって，macOSではhomebrewを用いてnodebrewをインストールする必要がある．まず，ターミナル上で以下のコマンドを実行する．その際，ターミナル上でパスワードを求められるので，パスワードを入力する．
-\begin{verbatim}
+\begin{Verbatim}[fontsize=\scriptsize]
 $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-\end{verbatim}
+\end{Verbatim}
 次に，以下の2つのコマンドを順に実行する．
-\begin{verbatim}
+\begin{Verbatim}[fontsize=\small]
 ( echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
-\end{verbatim}
+\end{Verbatim}
 
 \subsubsection{nodebrewのインストール}
 
-ターミナルにて，以下のコマンドを4つを1つずつ順に実行してnodebrewをインストールする．
+ターミナルにて，以下の4つのコマンドを1つずつ順に実行してnodebrewをインストールする．
 
 \begin{verbatim}
 $ brew install nodebrew
@@ -60,8 +60,11 @@ $ npm install -g npm
 \section{起動・終了方法}
 
 \subsection{ソースコード}
-以下のURLからソースコードをダウンロードすることができる．
-\url{https://github.com/crab2424/webpro_submit}
+
+以下のURLにソースコードを添付する．\\
+\url{https://github.com/crab2424/webpro_submit}\\
+
+リポジトリページのcodeボタンから，Download ZIPを選択することで，ZIPファイルをダウンロードすることができる．
 
 \subsection{起動方法}
 まず，ソースコードが配置されたディレクトリ（webpro\_submit/app）に移動する．
@@ -92,6 +95,7 @@ Example app listening on port 8080!
     Ctrl + C
 \end{center}
 
+
 \section{トラブルシューティング}
 
 \subsection{起動できない場合}
@@ -100,6 +104,7 @@ Example app listening on port 8080!
     ポート8080が他のプロセスで使用されている可能性がある．他のNode.jsプロセスを終了するか，PCを再起動してから再度実行すること．
     \item エラー: Cannot find module \\
     npm install が正しく実行されていない可能性がある．再度インストール手順を確認すること．
+    また，現在のディレクトリが正しくない可能性がある．ディレクトリがwebpro\_submit/appであるか確認すること．
 \end{itemize}
 
 \section{既知の不具合・制限事項}
