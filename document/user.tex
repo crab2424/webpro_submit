@@ -7,7 +7,7 @@
 
 
 \section{使用できる機能}
-このシステムでは以下の機能を使用することができる。
+このシステムでは、以下の機能を利用することができる。
 \begin{itemize}
     \item 都道府県データの一覧表示
     \item 各都道府県の詳細情報（人口、面積、県庁所在地など）の表示
@@ -45,7 +45,7 @@
 
 \subsection{詳細表示}
 選択した都道府県の詳しい情報（コード、面積、人口、県庁所在地、地方区分）を確認できる。
-この画面から、情報の「編集」または「削除」を行う画面へ移動できる。
+この画面から、情報の「編集」、「削除」を行う画面への移動、または一覧表示に戻ることができる。
 
 \begin{figure}[H]
     \centering
@@ -57,14 +57,27 @@
 \subsection{データ追加}
 新規作成画面にて、必要な情報を入力し「登録」ボタンを押すことで、新しいデータをリストに追加できる。
 「登録して新たに作成」を選択すると、連続してデータを入力することが可能である。
-% 解説: app_system.js の処理 に基づく
 
 \subsection{データ編集}
-詳細画面の「編集」ボタンから、既存のデータを修正できる。内容は即座に一覧および詳細画面に反映される。
+図\ref{fig:user_edit}の詳細画面の「編集」ボタンから、既存のデータを修正できる。内容は即座に一覧および詳細画面に反映される。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{fig/user/edit.png}
+    \caption{編集画面}
+    \label{fig:user_edit}
+\end{figure}
 
 \subsection{データ削除}
-詳細画面の「削除」ボタンを押すと、確認画面が表示される。
+図\ref{fig:user_check}の詳細画面の「削除」ボタンを押すと、確認画面が表示される。
 削除対象のデータを確認し、問題なければ実行することでデータが削除される。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{fig/user/check.png}
+    \caption{削除確認画面}
+    \label{fig:user_check}
+\end{figure}
 
 \section{Q\&A (よくある質問)}
 
