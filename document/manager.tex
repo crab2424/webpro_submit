@@ -5,43 +5,83 @@
 本仕様書は，Node.jsおよびテンプレートエンジンEJSを用いたWebアプリケーションの仕様書である．
 本システムは，サーバーサイドで都道府県データを管理し，EJSを用いて動的にHTMLを生成・表示する．
 データベースの利用は行わず，サーバープロセスのメモリ上（変数）でデータを保持・操作することを前提とする．
+なお，本システムはmacOS環境で開発したものであるため，macOSを基準とした管理方法を示す．
 
 \section{インストール方法}
-本システムの動作環境およびインストール手順を以下に示す．
 
 \subsection{動作環境}
+
+本システムの動作環境およびインストール手順を以下に示す．
 \begin{itemize}
     \item OS: Windows, macOS, または Linux
-    \item ランタイム: Node.js (推奨バージョン: LTS版)
-    \item パッケージマネージャ: npm
+    \item サーバー実行環境: node.js (開発時バージョン v24.12.0)
+    \item パッケージマネージャー: npm, nodebrew, homebrew
 \end{itemize}
 
 \subsection{セットアップ手順}
-ターミナル（コマンドプロンプト）にて，ソースコードが配置されたディレクトリ（webpro\_submit）に移動し，以下のコマンドを実行して必要なライブラリ（Express, EJS）をインストールする．
+
+\subsubsection{homebrewのインストール}
+JavaScriptを動作させるにあたって，macOSではhomebrewを用いてnodebrewをインストールする必要がある．まず，ターミナル上で以下のコマンドを実行する．その際，ターミナル上でパスワードを求められるので，パスワードを入力する．
+\begin{verbatim}
+$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+\end{verbatim}
+次に，以下の2つのコマンドを順に実行する．
+\begin{verbatim}
+( echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+\end{verbatim}
+
+\subsubsection{nodebrewのインストール}
+
+ターミナルにて，以下のコマンドを4つを1つずつ順に実行してnodebrewをインストールする．
 
 \begin{verbatim}
-$ cd webpro_submit
-$ npm install
+$ brew install nodebrew
+$ nodebrew setup
+$ echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.zshrc
+$ source ~/.zshrc
+\end{verbatim}
+
+
+\subsubsection{node.jsのインストール}
+ターミナルにて，以下のコマンドを1つずつ順に実行してnode.jsをインストールする．
+
+\begin{verbatim}
+$ nodebrew install stable
+$ nodebrew ls
+\end{verbatim}
+これにより，現在のバージョンが表示されるため，それに従って以下のコマンドを実行する．
+\begin{verbatim}
+$ nodebrew use v24.12.0
+$ npm install -g npm
 \end{verbatim}
 
 
 \section{起動・終了方法}
 
+\subsection{ソースコード}
+以下のURLからソースコードをダウンロードすることができる．
+\url{https://github.com/crab2424/webpro_submit}
+
 \subsection{起動方法}
-以下のコマンドを実行してサーバーを起動する．
+まず，ソースコードが配置されたディレクトリ（webpro\_submit/app）に移動する．
 
 \begin{verbatim}
-$ node app/app_system.js
+$ cd webpro_submit/app
 \end{verbatim}
 
+次に，以下のコマンドを実行してサーバーを起動する．
+
+\begin{verbatim}
+$ node app_system.js
+\end{verbatim}
 
 起動に成功すると，コンソールに以下のメッセージが表示される．
 \begin{verbatim}
 Example app listening on port 8080!
 \end{verbatim}
 
-
-その後，Webブラウザで以下のURLにアクセスする．
+その後，Webブラウザで以下のURLにアクセスすると，トップページが表示される．
 \begin{center}
     \url{http://localhost:8080/}
 \end{center}
@@ -56,14 +96,14 @@ Example app listening on port 8080!
 
 \subsection{起動できない場合}
 \begin{itemize}
-    \item \textbf{エラー: Address already in use} \\
+    \item エラー: Address already in use \\
     ポート8080が他のプロセスで使用されている可能性がある．他のNode.jsプロセスを終了するか，PCを再起動してから再度実行すること．
-    \item \textbf{エラー: Cannot find module} \\
+    \item エラー: Cannot find module \\
     npm install が正しく実行されていない可能性がある．再度インストール手順を確認すること．
 \end{itemize}
 
 \section{既知の不具合・制限事項}
 本システムは学習用アプリケーションとしての仕様上，以下の制限事項が存在する．
 \begin{itemize}
-    \item \textbf{データの非永続性}: データベースを使用せず，サーバーのメモリ上（変数）でデータを管理しているため [cite: 27]，サーバーを再起動または終了すると，追加・編集・削除したデータは初期状態にリセットされる．
+    \item データの非永続性: データベースを使用せず，サーバーのメモリ上（変数）でデータを管理しているため，サーバーを再起動または終了すると，追加・編集・削除したデータは初期状態にリセットされる．
 \end{itemize}
